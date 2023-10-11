@@ -1,0 +1,55 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius"
+    android:gravity="center"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/radius"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/years_decimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:fontFamily="@font/inter_bold"
+            android:lineSpacingExtra="8sp"
+            android:text="27."
+            android:textColor="#000"
+            android:textSize="35sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/years_float"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:fontFamily="@font/inter_bold"
+            android:text="2727"
+
+            android:textColor="#000"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/years_lived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLayout"
+        android:fontFamily="@font/inter_semibold"
+        android:text="years lived"
+        android:layout_marginTop="5dp"
+        android:textColor="#000"
+        android:textSize="17sp" />
+</LinearLayout>
+

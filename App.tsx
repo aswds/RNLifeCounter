@@ -11,11 +11,9 @@ import {StyleSheet, useColorScheme} from 'react-native';
 import 'react-native-gesture-handler';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RootNavigator from './src/navigation/RootNavigator';
-
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
-
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 

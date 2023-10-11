@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import BirthdayDatePicker from '../../components/BirthPicker';
 import Button from '../../components/Button';
 import {Text} from '../../components/Text';
 import {colors} from '../../constants/Colors';
 import {MainNavProps} from '../../navigation/types/types';
-import {set, setStringValue} from '../../services/asyncStorageFunction';
+import {get, set} from '../../services/asyncStorageFunction';
 const PickBirthdayScreen: React.FC<MainNavProps<'pickBirthdayScreen'>> = ({
   navigation,
 }) => {
@@ -14,10 +14,19 @@ const PickBirthdayScreen: React.FC<MainNavProps<'pickBirthdayScreen'>> = ({
   function handleShowPicker(toShow: boolean) {
     setShowPicker(toShow);
   }
+  useEffect(() => {
+    async function getDate() {
+      const birthdate = await get('birth_date');
+      if (birthdate) {
+        navigation.navigate('lifeCounter');
+      }
+    }
+    getDate();
+  }, []);
   function handleContinuePress() {
     if (date)
       set('birth_date', date.toISOString()).then(() => {
-        navigation.navigate('mainScreen');
+        navigation.navigate('lifeCounter');
       });
   }
   return (

@@ -1,11 +1,9 @@
-import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
+import MainScreen from '../../screens/MainScreen/MainScreen';
 import PickBirthdayScreen from '../../screens/PickBirthdayScreen/PickBirthdayScreen';
 import {get} from '../../services/asyncStorageFunction';
-import {MainNavProps, MainParamList} from '../types/types';
-import MainScreen from '../../screens/MainScreen/MainScreen';
-import DrawerNav from './Drawer/DrawerNav';
+import {MainParamList} from '../types/types';
 
 export function MainNav() {
   const Stack = createNativeStackNavigator<MainParamList>();
@@ -27,9 +25,9 @@ export function MainNav() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={isFirstLaunch ? 'pickBirthdayScreen' : 'mainScreen'}>
+      initialRouteName={isFirstLaunch ? 'pickBirthdayScreen' : 'lifeCounter'}>
       <Stack.Screen name="pickBirthdayScreen" component={PickBirthdayScreen} />
-      <Stack.Screen name="mainScreen" component={MainScreen} />
+      <Stack.Screen name="lifeCounter" component={MainScreen} />
     </Stack.Navigator>
   );
 }

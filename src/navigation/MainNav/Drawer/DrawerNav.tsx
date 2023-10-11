@@ -16,7 +16,7 @@ import {Fonts} from '../../../../assets/fonts/fontPicker';
 
 const Drawer = createDrawerNavigator();
 
-function DrawerContent(props) {
+function DrawerContent() {
   return (
     <DrawerContentScrollView
       style={{backgroundColor: colors.accent, flex: 1}}
