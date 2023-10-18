@@ -1,4 +1,4 @@
-package com.reactnativeproject;
+package com.syntrixApps.LifeSpanTracker;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

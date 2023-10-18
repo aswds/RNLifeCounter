@@ -15,12 +15,6 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return <RootNavigator />;
 }
 

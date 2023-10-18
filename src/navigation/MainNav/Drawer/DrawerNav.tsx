@@ -1,22 +1,20 @@
-import * as React from 'react';
-import {Button, View} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import MainScreen from '../../../screens/MainScreen/MainScreen';
-import {MainNav} from '../MainNav';
-import {Text} from '../../../components/Text';
-import {colors} from '../../../constants/Colors';
-import Box from '../../../components/layouts/Box';
+import * as React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import {Fonts} from '../../../../assets/fonts/fontPicker';
+import {Text} from '../../../components/Text';
+import Box from '../../../components/layouts/Box';
+import {colors} from '../../../constants/Colors';
+import {MainNav} from '../MainNav';
 
 const Drawer = createDrawerNavigator();
 
-function DrawerContent() {
+function DrawerContent(props: any) {
   return (
     <DrawerContentScrollView
       style={{backgroundColor: colors.accent, flex: 1}}

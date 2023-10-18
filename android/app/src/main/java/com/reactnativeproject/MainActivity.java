@@ -1,4 +1,4 @@
-package com.reactnativeproject;
+package com.syntrixApps.LifeSpanTracker;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "ReactNativeProject";
+    return "LifeCounter";
   }
   @Override
     protected void onCreate(Bundle savedInstanceState) {

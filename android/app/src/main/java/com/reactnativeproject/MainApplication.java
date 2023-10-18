@@ -1,4 +1,4 @@
-package com.reactnativeproject;
+package com.syntrixApps.LifeSpanTracker;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

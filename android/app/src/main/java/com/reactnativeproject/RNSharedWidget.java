@@ -1,4 +1,4 @@
-package com.reactnativeproject;
+package com.syntrixApps.LifeSpanTracker;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;

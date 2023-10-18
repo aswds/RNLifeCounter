@@ -39,7 +39,6 @@ const BirthdayDatePicker: React.FC<BirthdayDatePickerProps> = ({
       mode={mode}
       is24Hour={true}
       onChange={onChange}
-      onTouchCancel={() => console.log('cancel')}
     />
   );
 };

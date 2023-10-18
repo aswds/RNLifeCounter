@@ -1,4 +1,4 @@
-import {PermissionsAndroid, Platform} from 'react-native';
+import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 
 export async function hasAndroidPermission() {
@@ -26,7 +26,7 @@ export async function hasAndroidPermission() {
   if (hasPermission) {
     return true;
   }
-  const getRequestPermissionPromise = () => {
+  const getRequestPermissionPromise = async () => {
     if (Platform.Version >= 33) {
       return PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
@@ -40,8 +40,21 @@ export async function hasAndroidPermission() {
       );
     } else {
       return PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      )
+        .then(status => {
+          if (
+            status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
+            status === PermissionsAndroid.RESULTS.DENIED
+          ) {
+            return Alert.alert(
+              "We can't capture a screenshot because of a permission issue.",
+              'Please review your permission settings.',
+            );
+          }
+          status === PermissionsAndroid.RESULTS.GRANTED;
+        })
+        .catch(e => console.error(e));
     }
   };
 
