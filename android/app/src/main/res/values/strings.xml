@@ -3,4 +3,14 @@
     <string name="appwidget_text">LifeSpan Tracker</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">Reminder that time is moving regardless</string>
+    <string name="life_clock">Life clock</string>
+    <string name="years_on_earth">years on Earth</string>
+    <string name="days_lived">days lived</string>
+    <string name="next_birthday">next birthday</string>
+    <string name="birthday_today">Today</string>
+    <string name="add_birthday_hint">Open app to add birthday</string>
+    <plurals name="birthday_days">
+        <item quantity="one">in %d day</item>
+        <item quantity="other">in %d days</item>
+    </plurals>
 </resources>

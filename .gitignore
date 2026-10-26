@@ -28,6 +28,7 @@ build/
 .idea
 .gradle
 local.properties
+/android/keystore.properties
 *.iml
 *.hprof
 .cxx/
@@ -39,6 +40,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+.yarn/install-state.gz
 
 # fastlane
 #

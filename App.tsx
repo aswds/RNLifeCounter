@@ -5,36 +5,17 @@
  * @format
  */
 
-import type {PropsWithChildren} from 'react';
 import React from 'react';
-import {StyleSheet, useColorScheme} from 'react-native';
 import 'react-native-gesture-handler';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootNavigator from './src/navigation/RootNavigator';
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-function App(): JSX.Element {
-  return <RootNavigator />;
-}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+function App(): React.JSX.Element {
+  return (
+    <SafeAreaProvider>
+      <RootNavigator />
+    </SafeAreaProvider>
+  );
+}
 
 export default App;

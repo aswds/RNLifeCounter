@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
   StyleSheet,
+  TextStyle,
   ViewStyle,
 } from 'react-native';
 import {Text} from './Text';
@@ -11,7 +12,7 @@ import {colors} from '../constants/Colors';
 interface CustomButtonProps extends Omit<TouchableOpacityProps, 'style'> {
   children: ReactNode;
   buttonStyle?: ViewStyle;
-  textStyle?: object;
+  textStyle?: TextStyle;
 }
 
 const Button: React.FC<CustomButtonProps> = ({
@@ -25,7 +26,7 @@ const Button: React.FC<CustomButtonProps> = ({
       <Text
         style={[styles.text, textStyle]}
         fontFamily="regular"
-        size={textStyle?.fontSize ?? 20}
+        size={textStyle?.fontSize ?? 16}
         color={textStyle?.color ?? colors.primary}>
         {children}
       </Text>

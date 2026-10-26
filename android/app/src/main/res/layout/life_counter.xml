@@ -1,55 +1,115 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/radius"
-    android:gravity="center"
-    android:padding="20dp"
-    android:orientation="vertical">
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/life_widget_background"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="0dp">
 
-    <LinearLayout
-        android:id="@+id/textLayout"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/radius"
-        android:gravity="center"
+        android:fontFamily="@font/inter_semibold"
+        android:letterSpacing="0.14"
+        android:text="@string/life_clock"
+        android:textAllCaps="true"
+        android:textColor="@color/widget_muted"
+        android:textSize="10sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="bottom"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/years_decimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:fontFamily="@font/inter_bold"
-            android:lineSpacingExtra="8sp"
             android:text="27."
-            android:textColor="#000"
-            android:textSize="35sp"
-            android:typeface="normal" />
+            android:textColor="@color/widget_text"
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/years_float"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:fontFamily="@font/inter_bold"
             android:text="2727"
-
-            android:textColor="#000"
-            android:textSize="25sp" />
-
+            android:textColor="@color/widget_text"
+            android:textSize="24sp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/years_lived"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textLayout"
         android:fontFamily="@font/inter_semibold"
-        android:text="years lived"
-        android:layout_marginTop="5dp"
-        android:textColor="#000"
-        android:textSize="17sp" />
-</LinearLayout>
+        android:text="@string/years_on_earth"
+        android:textColor="@color/widget_muted"
+        android:textSize="13sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/widget_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/days_lived"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="9,999"
+                android:textColor="@color/widget_text"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/days_lived"
+                android:textColor="@color/widget_muted"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/birthday_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="end"
+                android:text="in 42 days"
+                android:textColor="@color/widget_text"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="end"
+                android:text="@string/next_birthday"
+                android:textColor="@color/widget_muted"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

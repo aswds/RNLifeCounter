@@ -3,13 +3,12 @@ import {DrawerActions} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
-  NativeModules,
   Platform,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import ViewShot from 'react-native-view-shot';
+import ViewShot, {ViewShotRef} from 'react-native-view-shot';
 import Button from '../../components/Button';
 import {Text} from '../../components/Text';
 import Box from '../../components/layouts/Box';
@@ -18,42 +17,47 @@ import ScreenLayout from '../../layout/Screen';
 import {MainNavProps} from '../../navigation/types/types';
 import {hasAndroidPermission} from '../../services/androidPermission';
 import {get} from '../../services/asyncStorageFunction';
-import {calculateAge} from '../../services/calculateAge';
+import {getLifeWidgetDetails} from '../../services/widgetData';
+import {ensureLifeWidgetBirthDate} from '../../services/widgetSync';
 
 const MainScreen: React.FC<MainNavProps<'lifeCounter'>> = ({navigation}) => {
   const yearsFontSize = 62;
-  const {RNSharedWidget} = NativeModules;
-  const ref = useRef<ViewShot>(); // should be inside the component
+  const ref = useRef<ViewShotRef>(null);
+  const hasSeededWidget = useRef(false);
   const [age, setAge] = useState<string[]>();
-  const [buttonBackground, setButtonBackground] = useState<'none' | 'flex'>(
+  const [buttonBackground, setButtonBackground] = useState<string>(
     colors.accent,
   );
   useEffect(() => {
-    async function getDate() {
+    let isMounted = true;
+
+    async function loadLifeClock() {
       const birthdate = await get('birth_date');
       if (birthdate) {
-        const calculatedAge = calculateAge(birthdate);
-        setAge(calculatedAge?.toString().split('.'));
+        const details = getLifeWidgetDetails(birthdate);
+        if (isMounted) {
+          setAge(details.yearsDisplay.split('.'));
+        }
+        if (!hasSeededWidget.current) {
+          hasSeededWidget.current = true;
+          // A one-time migration for birthdays saved before widgets stored the
+          // birthday itself. This is not a recurring time/age synchronisation.
+          ensureLifeWidgetBirthDate(details.birthDate).catch(() => undefined);
+        }
       } else {
         navigation.navigate('pickBirthdayScreen');
       }
     }
-    getDate();
-    getData();
-  });
+    loadLifeClock();
 
-  const getData = async () => {
-    if (age?.length > 0) {
-      RNSharedWidget.setData(
-        'lifeCounter',
-        JSON.stringify({
-          years_decimal: `${age[0]}.`,
-          years_float: age[1],
-        }),
-        (_status: number) => _status,
-      );
-    }
-  };
+    // Keep the in-app clock accurate during a long open session. Native widgets
+    // calculate their own display from the birthday they received on save.
+    const clockInterval = setInterval(loadLifeClock, 60 * 1000);
+    return () => {
+      isMounted = false;
+      clearInterval(clockInterval);
+    };
+  }, [navigation]);
 
   async function savePicture(uri: string) {
     if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
@@ -68,22 +72,15 @@ const MainScreen: React.FC<MainNavProps<'lifeCounter'>> = ({navigation}) => {
   return (
     <ScreenLayout innerContainerStyle={styles.innerContainerStyle}>
       <ViewShot
-        style={{
-          flex: 1,
-          backgroundColor: colors.primary,
-          alignItems: 'center',
-        }}
+        style={styles.captureArea}
         ref={ref}
         options={{
-          fileName: age?.length > 0 ? `${age[0]}.${age[1]}` : 'Life Capture', // screenshot image name
+          fileName: age ? `${age[0] ?? ''}.${age[1] ?? ''}` : 'Life Capture',
           format: 'jpg', // image extension
           quality: 0.9, // image quality
         }}>
         <TouchableOpacity
-          style={{
-            position: 'absolute',
-            right: 0,
-          }}
+          style={styles.menuButton}
           onPress={() => {
             navigation.dispatch(DrawerActions.openDrawer());
           }}>
@@ -113,15 +110,19 @@ const MainScreen: React.FC<MainNavProps<'lifeCounter'>> = ({navigation}) => {
         </Box>
         <Box flex={1} justifyContent="flex-end" width={'100%'}>
           <Button
-            buttonStyle={[
-              styles.buttonStyle,
-              {backgroundColor: buttonBackground},
-            ]}
+            buttonStyle={{
+              ...styles.buttonStyle,
+              backgroundColor: buttonBackground,
+            }}
             textStyle={styles.buttonTextStyle}
             onPress={() => {
               setButtonBackground('transparent');
-              ref?.current
-                ?.capture()
+              const screenshot = ref.current?.capture?.();
+              if (!screenshot) {
+                setButtonBackground(colors.accent);
+                return;
+              }
+              screenshot
                 .then(uri => {
                   savePicture(uri).then(() =>
                     Alert.alert(
@@ -153,6 +154,15 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     fontSize: 16,
+  },
+  captureArea: {
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    flex: 1,
+  },
+  menuButton: {
+    position: 'absolute',
+    right: 0,
   },
 });
 

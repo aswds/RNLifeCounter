@@ -1,14 +1,13 @@
 import React from 'react';
-import {Text as RNText} from 'react-native';
+import {ColorValue, Text as RNText} from 'react-native';
 import {Fonts} from '../../assets/fonts/fontPicker';
 import {colors} from '../constants/Colors';
-interface TextProps
-  extends React.ComponentProps<typeof RNText>,
-    React.PropsWithChildren {
+type TextProps = Omit<React.ComponentProps<typeof RNText>, 'children'> & {
+  children?: React.ReactNode;
   size: number;
-  color?: string;
-  fontFamily: keyof typeof Fonts;
-}
+  color?: ColorValue;
+  fontFamily?: keyof typeof Fonts;
+};
 
 export const Text: React.FC<TextProps> = ({
   size,

@@ -3,7 +3,6 @@ package com.syntrixApps.LifeSpanTracker;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
@@ -31,17 +30,23 @@ public class RNSharedWidget extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setData(String key, String data, Callback callback){
-        SharedPreferences.Editor editor = context.getSharedPreferences("DATA", Context.MODE_PRIVATE).edit();
+        boolean didSave = context
+                .getSharedPreferences("DATA", Context.MODE_PRIVATE)
+                .edit()
+                .putString(key, data)
+                .commit();
+        if (!didSave) {
+            callback.invoke(false);
+            return;
+        }
 
-        editor.putString(key, data);
-        editor.commit();
-
-        Intent intent = new Intent(getCurrentActivity().getApplicationContext(), LifeCounter.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        ComponentName componentName = new ComponentName(getCurrentActivity().getApplicationContext(), LifeCounter.class);
-        int[] ids = AppWidgetManager.getInstance(getCurrentActivity().getApplicationContext()).getAppWidgetIds(componentName);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        getCurrentActivity().getApplicationContext().sendBroadcast(intent);
+        ComponentName componentName = new ComponentName(context, LifeCounter.class);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] ids = appWidgetManager.getAppWidgetIds(componentName);
+        for (int id : ids) {
+            LifeCounter.updateAppWidget(context, appWidgetManager, id);
+        }
+        callback.invoke(true);
     }
 
 }

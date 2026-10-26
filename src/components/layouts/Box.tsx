@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {View, ViewStyle} from 'react-native';
 import React from 'react';
 
 interface BoxProps extends ViewStyle, React.PropsWithChildren {}
@@ -8,5 +8,3 @@ const Box: React.FC<BoxProps> = ({children, ...props}) => {
 };
 
 export default Box;
-
-const styles = StyleSheet.create({});
